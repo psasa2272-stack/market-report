@@ -38,24 +38,20 @@
             @apply text-slate-300 hover:text-white hover:bg-slate-600;
         }
     </style>
-    <!-- Chosen Palette: Warm Professional - Stone (Background), Slate (Text), Teal (Primary), Amber (Accent) -->
-    <!-- Application Structure Plan:
+    <!-- Chosen Palette: Warm Professional - Stone (Background), Slate (Text), Teal (Primary), Amber (Accent) --><!-- Application Structure Plan:
          1. Hero Section: Immediate hook with the TAM/SAM/SOM of Year 1.
          2. The Growth Trajectory (Now the main chart): Line chart showing the full 4-year forecast for SAM and SOM.
          3. Scenario Simulator: Calculator allowing adjustment of the SOM target percentage, applied to the current SAM (Year 1).
          4. Strategic Context: Textual blocks explaining the underlying calculation methodology (e.g., Early Adopters, Market Dynamics).
          5. Removed Redundant MGR Forecast chart.
-    -->
-    <!-- Visualization & Content Choices:
+    --><!-- Visualization & Content Choices:
          1. Metric Cards: HTML/Tailwind Grid. Goal: Inform. Method: Big numbers for Year 1.
          2. Growth Chart: Chart.js Line Chart. Goal: Trends. Method: Displays 4-year dynamic forecast for SAM and SOM based on new data arrays.
          3. Revenue Simulator: JS + HTML Slider. Goal: Change/Explore. Method: Slider adjusts SOM calculation based on selected Year SAM. Interaction: Real-time DOM updates via Year Selector.
-    -->
-</head>
+    --></head>
 <body class="bg-stone-50 text-slate-800 antialiased selection:bg-teal-200 selection:text-teal-900">
 
-    <!-- Navigation -->
-    <nav class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+    <!-- Navigation --><nav class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
@@ -66,15 +62,13 @@
                     <button onclick="scrollToSection('executive-summary')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Огляд</button>
                     <button onclick="scrollToSection('growth')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Прогноз динаміки</button>
                     <button onclick="scrollToSection('simulator')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Симулятор SOM</button>
-                    <!-- ОНОВЛЕНО: Видалено посилання на MGR-Forecast -->
-                    <button onclick="scrollToSection('strategy')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Стратегія</button>
+                    <!-- ОНОВЛЕНО: Видалено посилання на MGR-Forecast --><button onclick="scrollToSection('strategy')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Стратегія</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero / Executive Summary (Uses Year 1 Data) -->
-    <header id="executive-summary" class="bg-white py-12 sm:py-20 border-b border-stone-100">
+    <!-- Hero / Executive Summary (Uses Year 1 Data) --><header id="executive-summary" class="bg-white py-12 sm:py-20 border-b border-stone-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
                 Аналіз ринкових можливостей рітейлу (4-річний прогноз)
@@ -85,8 +79,7 @@
                 з чіткою стратегією залучення ранніх послідовників.
             </p>
             
-            <!-- Key Metrics Grid (Year 1) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <!-- Key Metrics Grid (Year 1) --><div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 card-hover transition-all">
                     <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Доступний ринок (SAM, Рік 1)</div>
                     <div class="text-3xl font-bold text-slate-900">191.2 млн ₴</div>
@@ -108,8 +101,7 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
-        <!-- Section 1: Growth Chart (SAM vs SOM) -->
-        <section id="growth" class="scroll-mt-24">
+        <!-- Section 1: Growth Chart (SAM vs SOM) --><section id="growth" class="scroll-mt-24">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">Прогноз динаміки SAM vs SOM (4 роки)</h2>
                 <p class="text-stone-600 max-w-3xl mx-auto">
@@ -125,17 +117,13 @@
         </section>
 
 
-        <!-- Section 2: Simulator (Uses Dynamic Year Data for Base) -->
-        <section id="simulator" class="scroll-mt-24 bg-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
-            <!-- Decorative background element -->
-            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-teal-500 opacity-10 blur-3xl"></div>
+        <!-- Section 2: Simulator (Uses Dynamic Year Data for Base) --><section id="simulator" class="scroll-mt-24 bg-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
+            <!-- Decorative background element --><div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-teal-500 opacity-10 blur-3xl"></div>
             
             <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <!-- Year Selector Buttons -->
-                    <div class="flex justify-start mb-6">
-                        <!-- ВИПРАВЛЕНО: Додано клас flex для гарантії рядкового розташування, збільшено space-x-3 -->
-                        <div id="year-selector" class="flex bg-slate-700 p-1 rounded-lg inline-flex space-x-3">
+                    <!-- Year Selector Buttons --><div class="flex justify-start mb-6">
+                        <!-- ВИПРАВЛЕНО: Додано клас flex для гарантії рядкового розташування, збільшено space-x-3 --><div id="year-selector" class="flex bg-slate-700 p-1 rounded-lg inline-flex space-x-3">
                             <button id="btn-year-0" onclick="updateSimulatorYear(0)" class="year-btn year-btn-active">Рік 1</button>
                             <button id="btn-year-1" onclick="updateSimulatorYear(1)" class="year-btn year-btn-inactive">Рік 2</button>
                             <button id="btn-year-2" onclick="updateSimulatorYear(2)" class="year-btn year-btn-inactive">Рік 3</button>
@@ -152,14 +140,12 @@
                         <label for="shareSlider" class="block text-sm font-medium text-teal-300 mb-2">
                             Частка ринку (від SAM, %): <span id="shareValueDisplay" class="text-white font-bold text-lg">2.2%</span>
                         </label>
-                        <!-- ЗМІНА: max="50" на max="100" -->
-                        <input type="range" id="shareSlider" min="1" max="100" value="2.2" step="0.1" 
+                        <!-- ЗМІНА: max="50" на max="100" --><input type="range" id="shareSlider" min="1" max="100" value="2.2" step="0.1" 
                             class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-500">
                         <div class="flex justify-between text-xs text-slate-500 mt-2">
                             <span>1% (мін.)</span>
                             <span id="base-target-display">2.2% (Базова ціль)</span>
-                            <!-- ЗМІНА: 50% (Макс.) на 100% (Повний SAM) -->
-                            <span>100% (Повний SAM)</span>
+                            <!-- ЗМІНА: 50% (Макс.) на 100% (Повний SAM) --><span>100% (Повний SAM)</span>
                         </div>
                     </div>
 
@@ -185,8 +171,7 @@
             </div>
         </section>
         
-        <!-- Section 3: Strategic Context (Was Growth & Strategy) -->
-        <section id="strategy" class="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Section 3: Strategic Context (Was Growth & Strategy) --><section id="strategy" class="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12">
             
             <div class="flex flex-col justify-center space-y-6 lg:col-span-2">
                  <div class="bg-amber-50 p-6 rounded-xl border border-amber-100">
@@ -273,7 +258,7 @@
                             label: 'SAM (Доступний Ринок)',
                             data: samData,
                             borderColor: 'rgba(13, 148, 136, 1)',
-                            backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                            backgroundColor: 'rgba(20, 184, 166, 0.1)', // Light teal for SAM fill
                             pointBackgroundColor: 'white',
                             pointBorderColor: 'rgba(13, 148, 136, 1)',
                             pointBorderWidth: 2,
@@ -286,13 +271,13 @@
                             label: 'SOM (Цільовий Дохід)',
                             data: somData,
                             borderColor: 'rgba(59, 130, 246, 1)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)', // Light blue for SOM fill
                             pointBackgroundColor: 'white',
                             pointBorderColor: 'rgba(59, 130, 246, 1)',
                             pointBorderWidth: 2,
                             pointRadius: 6,
                             pointHoverRadius: 8,
-                            fill: false,
+                            fill: true, // Fill the area under the SOM line
                             tension: 0.4
                         }
                     ]
