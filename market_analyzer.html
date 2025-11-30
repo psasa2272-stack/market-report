@@ -28,20 +28,28 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         .transition-all { transition: all 0.3s ease; }
+        .year-btn {
+            @apply px-4 py-2 rounded-md text-sm font-medium transition-all;
+        }
+        .year-btn-active {
+            @apply bg-teal-500 text-white shadow-md;
+        }
+        .year-btn-inactive {
+            @apply text-slate-300 hover:text-white hover:bg-slate-600;
+        }
     </style>
     <!-- Chosen Palette: Warm Professional - Stone (Background), Slate (Text), Teal (Primary), Amber (Accent) -->
     <!-- Application Structure Plan:
-         1. Hero Section: Immediate hook with the Total Addressable Market (TAM) value and core value proposition.
-         2. The Market Breakdown (TAM/SAM/SOM): Interactive chart to compare the monetary values.
-         3. Scenario Simulator: An interactive calculator allowing investors to adjust the 'Market Share %' slider (20% base) to see how it impacts the SOM revenue, using the 'Value per Retail Unit' as the ARPU.
-         4. Growth Trajectory: A line chart visualizing the 17.7% annual growth rate.
-         5. Strategic Context: Textual blocks explaining the underlying calculation methodology (e.g., Early Adopters, Market Dynamics).
+         1. Hero Section: Immediate hook with the TAM/SAM/SOM of Year 1.
+         2. The Growth Trajectory (Now the main chart): Line chart showing the full 4-year forecast for SAM and SOM.
+         3. Scenario Simulator: Calculator allowing adjustment of the SOM target percentage, applied to the current SAM (Year 1).
+         4. Strategic Context: Textual blocks explaining the underlying calculation methodology (e.g., Early Adopters, Market Dynamics).
+         5. Removed Redundant MGR Forecast chart.
     -->
     <!-- Visualization & Content Choices:
-         1. Metric Cards: HTML/Tailwind Grid. Goal: Inform. Method: Big numbers with descriptive labels.
-         2. Market Breakdown Chart: Chart.js Bar Chart. Goal: Compare. Method: Comparing TAM, SAM, SOM monetary magnitudes. Interaction: Toggle datasets between Monetary Value and Quantity Base.
-         3. Revenue Simulator: JS + HTML Slider. Goal: Change/Explore. Method: Slider adjusts SOM calculation based on 20% target. Interaction: Real-time DOM updates.
-         4. Market Forecast Chart: Chart.js Line Chart. Goal: Trends. Method: Compound growth calculation over 5 years using the new 17.7% MGR. NOW INCLUDES SAM AND SOM.
+         1. Metric Cards: HTML/Tailwind Grid. Goal: Inform. Method: Big numbers for Year 1.
+         2. Growth Chart: Chart.js Line Chart. Goal: Trends. Method: Displays 4-year dynamic forecast for SAM and SOM based on new data arrays.
+         3. Revenue Simulator: JS + HTML Slider. Goal: Change/Explore. Method: Slider adjusts SOM calculation based on selected Year SAM. Interaction: Real-time DOM updates via Year Selector.
     -->
 </head>
 <body class="bg-stone-50 text-slate-800 antialiased selection:bg-teal-200 selection:text-teal-900">
@@ -56,19 +64,20 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <button onclick="scrollToSection('executive-summary')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Огляд</button>
-                    <button onclick="scrollToSection('market-funnel')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Аналіз потенціалу</button>
+                    <button onclick="scrollToSection('growth')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Прогноз динаміки</button>
                     <button onclick="scrollToSection('simulator')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Симулятор SOM</button>
-                    <button onclick="scrollToSection('growth')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Прогноз зростання</button>
+                    <!-- ОНОВЛЕНО: Видалено посилання на MGR-Forecast -->
+                    <button onclick="scrollToSection('strategy')" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Стратегія</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero / Executive Summary -->
+    <!-- Hero / Executive Summary (Uses Year 1 Data) -->
     <header id="executive-summary" class="bg-white py-12 sm:py-20 border-b border-stone-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
-                Аналіз ринкових можливостей рітейлу
+                Аналіз ринкових можливостей рітейлу (4-річний прогноз)
             </h1>
             <p class="max-w-3xl mx-auto text-lg sm:text-xl text-stone-600 mb-10">
                 Комплексний огляд ринкового потенціалу, сфокусований на рітейл-мережа. Загальний ринок (TAM) складає
@@ -76,22 +85,22 @@
                 з чіткою стратегією залучення ранніх послідовників.
             </p>
             
-            <!-- Key Metrics Grid -->
+            <!-- Key Metrics Grid (Year 1) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 card-hover transition-all">
-                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Доступний ринок (SAM)</div>
-                    <div class="text-3xl font-bold text-slate-900">51 млн ₴</div>
-                    <div class="text-xs text-teal-600 mt-2 font-medium">Річний обсяг (фокус)</div>
+                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Доступний ринок (SAM, Рік 1)</div>
+                    <div class="text-3xl font-bold text-slate-900">191.2 млн ₴</div>
+                    <div class="text-xs text-teal-600 mt-2 font-medium">Початковий річний обсяг</div>
                 </div>
                 <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 card-hover transition-all">
-                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Цільовий дохід (SOM)</div>
-                    <div class="text-3xl font-bold text-slate-900">10.2 млн ₴</div>
-                    <div class="text-xs text-teal-600 mt-2 font-medium">На 1-й рік (20% SAM)</div>
+                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Цільовий дохід (SOM, Рік 1)</div>
+                    <div class="text-3xl font-bold text-slate-900">4.3 млн ₴</div>
+                    <div class="text-xs text-teal-600 mt-2 font-medium">Прогноз на перший рік (2.2% SAM)</div>
                 </div>
                 <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 card-hover transition-all">
-                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Зростання ринку (MGR)</div>
-                    <div class="text-3xl font-bold text-slate-900">17.7%</div>
-                    <div class="text-xs text-teal-600 mt-2 font-medium">Прогноз річного росту</div>
+                    <div class="text-sm font-medium text-stone-500 uppercase tracking-wide mb-1">Макс. SOM (Рік 4)</div>
+                    <div class="text-3xl font-bold text-slate-900">233.6 млн ₴</div>
+                    <div class="text-xs text-teal-600 mt-2 font-medium">Найвищий прогнозований дохід</div>
                 </div>
             </div>
         </div>
@@ -99,124 +108,95 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
-        <!-- Section 1: Market Breakdown (TAM/SAM/SOM) -->
-        <section id="market-funnel" class="scroll-mt-24">
+        <!-- Section 1: Growth Chart (SAM vs SOM) -->
+        <section id="growth" class="scroll-mt-24">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">Аналіз потенціалу: грошове значення та одиниці</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Прогноз динаміки SAM vs SOM (4 роки)</h2>
                 <p class="text-stone-600 max-w-3xl mx-auto">
-                    Цей розділ візуалізує наші розрахунки TAM-SAM-SOM. Для чіткого відображення SOM та SAM вісь грошового обсягу зрізана. Використовуйте перемикач для порівняння грошових обсягів та кількості об'єктів.
+                    Цей графік відображає динамічний розвиток Доступного Ринку (SAM) і нашого Цільового Доходу (SOM) протягом чотирьох років. Зверніть увагу, що SOM не є фіксованим відсотком, а відображає зростання нашої частки завдяки успішному залученню Early Adopters.
                 </p>
             </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-stone-200 p-6 lg:p-10">
-                <div class="flex justify-center mb-8">
-                    <div class="bg-stone-100 p-1 rounded-lg inline-flex">
-                        <button onclick="updateFunnelChart('money')" id="btn-money" class="px-6 py-2 rounded-md text-sm font-medium transition-all bg-white text-teal-700 shadow-sm">Грошовий обсяг</button>
-                        <button onclick="updateFunnelChart('units')" id="btn-units" class="px-6 py-2 rounded-md text-sm font-medium transition-all text-stone-500 hover:text-stone-900">Кількість одиниць</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                    <!-- Chart Column -->
-                    <div class="lg:col-span-2">
-                        <div class="chart-container">
-                            <canvas id="funnelChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Description Column -->
-                    <div class="space-y-6" id="funnel-details">
-                        <div class="p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg">
-                            <h3 class="font-bold text-amber-900 text-lg mb-1">TAM (загальний ринок)</h3>
-                            <p class="text-sm text-amber-800">10.92 млрд грн</p>
-                            <p class="text-sm text-stone-600 mt-2">Базується на 0.005% від обороту роздрібної торгівлі України.</p>
-                        </div>
-                        <div class="p-4 bg-teal-50 border-l-4 border-teal-500 rounded-r-lg hover:bg-stone-50 transition-colors">
-                            <h3 class="font-bold text-teal-900 text-lg mb-1">SAM (доступний ринок)</h3>
-                            <p class="text-sm text-teal-800">51 млн грн</p>
-                            <p class="text-sm text-stone-600 mt-2">Цільовий сегмент: 300 великих рітейл-мереж/ТЦ з високою маржинальністю.</p>
-                        </div>
-                        <div class="p-4 bg-white border-l-4 border-slate-400 rounded-r-lg hover:bg-stone-50 transition-colors">
-                            <h3 class="font-bold text-slate-800 text-lg mb-1">SOM (цільова частка)</h3>
-                            <p class="text-sm text-slate-700">10.2 млн грн</p>
-                            <p class="text-sm text-stone-600 mt-2">Прогноз на 1-й рік: 20% від SAM (Early Adopters).</p>
-                        </div>
-                    </div>
+            
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-stone-200">
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: Simulator -->
+
+        <!-- Section 2: Simulator (Uses Dynamic Year Data for Base) -->
         <section id="simulator" class="scroll-mt-24 bg-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
             <!-- Decorative background element -->
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-teal-500 opacity-10 blur-3xl"></div>
             
             <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="text-3xl font-bold mb-4 text-white">Симулятор залучення early adopters</h2>
+                    <!-- Year Selector Buttons -->
+                    <div class="flex justify-start mb-6">
+                        <!-- ВИПРАВЛЕНО: Додано клас flex для гарантії рядкового розташування, збільшено space-x-3 -->
+                        <div id="year-selector" class="flex bg-slate-700 p-1 rounded-lg inline-flex space-x-3">
+                            <button id="btn-year-0" onclick="updateSimulatorYear(0)" class="year-btn year-btn-active">Рік 1</button>
+                            <button id="btn-year-1" onclick="updateSimulatorYear(1)" class="year-btn year-btn-inactive">Рік 2</button>
+                            <button id="btn-year-2" onclick="updateSimulatorYear(2)" class="year-btn year-btn-inactive">Рік 3</button>
+                            <button id="btn-year-3" onclick="updateSimulatorYear(3)" class="year-btn year-btn-inactive">Рік 4</button>
+                        </div>
+                    </div>
+
+                    <h2 class="text-3xl font-bold mb-4 text-white">Симулятор залучення early adopters (<span id="simulator-year-display">Рік 1</span>)</h2>
                     <p class="text-slate-300 mb-8 leading-relaxed">
-                        Наша базова ціль — залучити 20% сегмента SAM (Early Adopters). Використовуйте цей інструмент, щоб побачити, як зміна частки SAM впливає на річний дохід, виходячи з вартості обслуговування однієї мережі/ТЦ (170,000 ₴/рік).
+                        Наш базовий план на обраний рік — захопити <span id="base-som-percent-text">2.2%</span> сегмента SAM. Використовуйте цей інструмент, щоб побачити, як зміна нашої частки вплине на потенційний дохід цього року.
                     </p>
                     
                     <div class="mb-8">
                         <label for="shareSlider" class="block text-sm font-medium text-teal-300 mb-2">
-                            Частка ринку (від SAM, %): <span id="shareValueDisplay" class="text-white font-bold text-lg">20%</span>
+                            Частка ринку (від SAM, %): <span id="shareValueDisplay" class="text-white font-bold text-lg">2.2%</span>
                         </label>
-                        <input type="range" id="shareSlider" min="5" max="50" value="20" step="1" 
+                        <!-- ЗМІНА: max="50" на max="100" -->
+                        <input type="range" id="shareSlider" min="1" max="100" value="2.2" step="0.1" 
                             class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-500">
                         <div class="flex justify-between text-xs text-slate-500 mt-2">
-                            <span>5% (Консервативно)</span>
-                            <span>20% (Базова ціль)</span>
-                            <span>50% (Макс.)</span>
+                            <span>1% (мін.)</span>
+                            <span id="base-target-display">2.2% (Базова ціль)</span>
+                            <!-- ЗМІНА: 50% (Макс.) на 100% (Повний SAM) -->
+                            <span>100% (Повний SAM)</span>
                         </div>
                     </div>
 
                     <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                        <h3 class="text-sm uppercase tracking-wider text-slate-400 mb-2">Прогноз річного доходу</h3>
+                        <h3 class="text-sm uppercase tracking-wider text-slate-400 mb-2">Прогноз річного доходу (<span id="projected-year-display">Рік 1</span>)</h3>
                         <div class="flex items-baseline">
-                            <span id="projectedRevenue" class="text-4xl sm:text-5xl font-bold text-teal-400">10.2</span>
+                            <span id="projectedRevenue" class="text-4xl sm:text-5xl font-bold text-teal-400">4.30</span>
                             <span class="text-xl text-slate-300 ml-2">млн грн</span>
                         </div>
                         <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
                             <span class="text-sm text-slate-300">Кількість одиниць (Мереж/ТЦ):</span>
-                            <span id="projectedCustomers" class="text-lg font-semibold text-white">60</span>
+                            <span id="projectedCustomers" class="text-lg font-semibold text-white">7</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-xl p-6 text-slate-900 shadow-xl">
-                    <h4 class="font-bold text-lg mb-4 text-center">Динаміка доходу при зміні частки SAM</h4>
+                    <h4 class="font-bold text-lg mb-4 text-center">Динаміка доходу при зміні частки SAM (<span id="chart-year-display">Рік 1</span>)</h4>
                     <div class="chart-container" style="height: 300px;">
                         <canvas id="simulationChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Section 3: Growth & Strategy -->
-        <section id="growth" class="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Section 3: Strategic Context (Was Growth & Strategy) -->
+        <section id="strategy" class="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-            <!-- Growth Chart -->
-            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-stone-200">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-slate-900">Прогноз розвитку ринку (MGR)</h2>
-                    <p class="text-stone-600 text-sm mt-2">
-                        Темп зростання ринку (MGR) прогнозується на рівні <span class="font-semibold text-teal-600">17.7% щороку</span>. Графік показує, як збільшується грошовий обсяг SAM та наші цілі SOM протягом наступних 5 років.
-                    </p>
-                </div>
-                <div class="chart-container">
-                    <canvas id="growthChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Strategic Context Text -->
-            <div class="flex flex-col justify-center space-y-6">
-                <div class="bg-amber-50 p-6 rounded-xl border border-amber-100">
+            <div class="flex flex-col justify-center space-y-6 lg:col-span-2">
+                 <div class="bg-amber-50 p-6 rounded-xl border border-amber-100">
                     <h3 class="flex items-center text-lg font-bold text-amber-900 mb-3">
-                        <span class="mr-2">💡</span> Методологія оцінки SAM
+                        <span class="mr-2">💡</span> Методологія оцінки SAM та SOM
                     </h3>
                     <p class="text-amber-800 text-sm leading-relaxed">
-                        SAM (51 млн грн) розрахований на базі 276 ТЦ та приблизно 300 великих рітейл-мереж. Середня ціна обслуговування однієї мережі/ТЦ становить 170,000 грн/рік.
+                        TAM (10.92 млрд грн) залишається константою, розрахованою на базі 0.005% від обороту роздрібної торгівлі. <br>
+                        SAM (Доступний ринок) зростає з 191.2 млн грн до 373.4 млн грн за 4 роки, оскільки прогнозується щорічне зростання ринку на рівні 25% (17.7% зростання ринку + 7.3% зростання інфляції), що відображає розширення нашої здатності покривати ринок. <br>
+                        SOM (Цільовий дохід) розрахований на базі відсотка Early Adopters, який ми плануємо залучити щороку: від 2.2% (Рік 1) до 62.6% (Рік 4). Максимальний прогнозований дохід складає 233.6 млн ₴.
                     </p>
                 </div>
 
@@ -225,14 +205,14 @@
                         <span class="mr-2">🎯</span> Стратегічний фокус (SOM)
                     </h3>
                     <p class="text-stone-600 text-sm leading-relaxed mb-4">
-                        Ми фокусуємося на залученні 20% від SAM. Це є стратегією захоплення Early Adopters (ранніх послідовників), які найбільше готові спробувати нову технологію, незважаючи на конкуренцію.
+                        Низький відсоток SOM у перший рік (2.2%) відображає стратегію обережного захоплення Early Adopters. Різке зростання частки у наступні роки свідчить про очікуваний ефект масштабу та підтвердження цінності продукту після перших успішних кейсів.
                     </p>
                     <ul class="space-y-2">
                         <li class="flex items-start text-sm text-stone-600">
-                            <span class="text-teal-500 mr-2">✓</span> Зниження ризиків через фокус на інноваторах
+                            <span class="text-teal-500 mr-2">✓</span> Рік 1: 4.3 млн ₴, фокус на якості пілотних проєктів.
                         </li>
                         <li class="flex items-start text-sm text-stone-600">
-                            <span class="text-teal-500 mr-2">✓</span> Реалістичний прогноз доходу (10.2 млн ₴)
+                            <span class="text-teal-500 mr-2">✓</span> Рік 4: 233.6 млн ₴, пік зростання за рахунок агресивного масштабування.
                         </li>
                     </ul>
                 </div>
@@ -248,14 +228,23 @@
     </footer>
 
     <script>
-        // --- Data Store ---
+        // --- Data Store (Updated to dynamic arrays) ---
         const marketData = {
             tam: { money: 10920000000, units: 23682, label: "TAM (Грошове Значення)" },
-            sam: { money: 51000000, units: 300, label: "SAM (Доступний Обсяг)" },
-            somTarget: 0.20,
-            arpu: 170000,
-            growthRate: 0.177
+            // Dynamic data for 4 years (in Millions UAH)
+            years: ['Рік 1', 'Рік 2', 'Рік 3', 'Рік 4'],
+            samMoney: [191.2, 239.0, 298.8, 373.4], 
+            samUnits: [300, 300, 300, 300], 
+            somMoney: [4.3, 20.2, 124.2, 233.6], 
+            somPercent: [0.022, 0.0845, 0.416, 0.626], 
+            mgrRate: 0.25, // 25% (17.7% growth + 7.3% inflation)
+            
+            // Base values for simulator consistency
+            baseSamUnits: 300, // Constant units in SAM
         };
+
+        // Global state for simulator
+        let currentYearIndex = 0; 
         
         // --- Navigation ---
         function scrollToSection(id) {
@@ -265,130 +254,92 @@
             }
         }
 
-        // --- Chart Helper: Number Formatting ---
-        function formatNumber(num, isMoney) {
-            if (isMoney) {
-                if (num >= 1000000000) { 
-                    return (num / 1000000000).toFixed(2) + ' млрд грн';
-                }
-                if (num >= 1000000) {
-                    return (num / 1000000).toFixed(2) + ' млн грн';
-                }
-                return new Intl.NumberFormat('uk-UA').format(num) + ' грн';
-            }
-            return new Intl.NumberFormat('uk-UA').format(num) + ' одиниць';
-        }
+        // --- Chart 1: Growth Chart (SAM vs SOM) ---
+        let growthChartInstance = null;
 
-        // --- Chart 1: Market Breakdown (TAM/SAM/SOM) ---
-        let funnelChartInstance = null;
-        
-        function initFunnelChart() {
-            const ctx = document.getElementById('funnelChart').getContext('2d');
+        function initGrowthChart() {
+            const ctx = document.getElementById('growthChart').getContext('2d');
             
-            const dataConfig = {
-                labels: ['TAM (Загальний)', 'SAM (Доступний)', 'SOM (Цільовий)'],
-                datasets: [{
-                    label: 'Грошовий Обсяг (грн/рік)',
-                    data: [marketData.tam.money, marketData.sam.money, marketData.sam.money * marketData.somTarget],
-                    backgroundColor: [
-                        'rgba(251, 191, 36, 0.5)',
-                        'rgba(20, 184, 166, 0.8)',
-                        'rgba(148, 163, 184, 0.6)'
-                    ],
-                    borderColor: [
-                        'rgba(245, 158, 11, 1)',
-                        'rgba(13, 148, 136, 1)',
-                        'rgba(71, 85, 105, 1)'
-                    ],
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7
-                }]
-            };
+            // Get data in Millions
+            const samData = marketData.samMoney.map(val => val.toFixed(1));
+            const somData = marketData.somMoney.map(val => val.toFixed(1));
 
             const config = {
-                type: 'bar',
-                data: dataConfig,
+                type: 'line',
+                data: {
+                    labels: marketData.years,
+                    datasets: [
+                        {
+                            label: 'SAM (Доступний Ринок)',
+                            data: samData,
+                            borderColor: 'rgba(13, 148, 136, 1)',
+                            backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                            pointBackgroundColor: 'white',
+                            pointBorderColor: 'rgba(13, 148, 136, 1)',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'SOM (Цільовий Дохід)',
+                            data: somData,
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            pointBackgroundColor: 'white',
+                            pointBorderColor: 'rgba(59, 130, 246, 1)',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
+                },
                 options: {
-                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: { display: true, position: 'bottom' },
                         tooltip: {
                             backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            padding: 12,
+                            padding: 10,
                             callbacks: {
                                 label: function(context) {
-                                    const isMoney = document.getElementById('btn-money').classList.contains('bg-white');
-                                    return context.dataset.label + ': ' + formatNumber(context.raw, isMoney);
+                                    return context.dataset.label + ': ' + context.raw + ' млн грн';
                                 }
                             }
                         }
                     },
                     scales: {
-                        x: {
-                            max: 60000000, // ФОКУС: Обмежуємо вісь X до 60 млн, щоб побачити SAM і SOM
-                            grid: { display: true, color: '#f5f5f4' },
-                            title: { display: true, text: 'Грошовий Обсяг (млн грн) [TAM зрізано]' },
-                            ticks: { font: { family: 'Inter' }, callback: function(value) { return formatNumber(value, true); } }
-                        },
                         y: {
-                            grid: { display: false },
-                            ticks: { font: { family: 'Inter', weight: '600' } }
+                            beginAtZero: false,
+                            title: { display: true, text: 'Обсяг ринку (млн грн)' },
+                            grid: { color: '#f5f5f4' }
+                        },
+                        x: {
+                            grid: { display: false }
                         }
                     }
                 }
             };
-
-            funnelChartInstance = new Chart(ctx, config);
+            growthChartInstance = new Chart(ctx, config);
         }
-
-        function updateFunnelChart(type) {
-            const btnMoney = document.getElementById('btn-money');
-            const btnUnits = document.getElementById('btn-units');
-            const isMoney = (type === 'money');
-            
-            if (isMoney) {
-                btnMoney.className = "px-6 py-2 rounded-md text-sm font-medium transition-all bg-white text-teal-700 shadow-sm";
-                btnUnits.className = "px-6 py-2 rounded-md text-sm font-medium transition-all text-stone-500 hover:text-stone-900";
-                
-                funnelChartInstance.data.datasets[0].label = 'Грошовий Обсяг (грн/рік)';
-                funnelChartInstance.data.datasets[0].data = [marketData.tam.money, marketData.sam.money, marketData.sam.money * marketData.somTarget];
-                
-                // Встановлюємо фокус на SAM/SOM
-                funnelChartInstance.options.scales.x.max = 60000000;
-                funnelChartInstance.options.scales.x.title.text = 'Грошовий Обсяг (млн грн) [TAM зрізано]';
-                funnelChartInstance.options.scales.x.ticks.callback = function(value) { return formatNumber(value, true); };
-                
-            } else {
-                btnUnits.className = "px-6 py-2 rounded-md text-sm font-medium transition-all bg-white text-teal-700 shadow-sm";
-                btnMoney.className = "px-6 py-2 rounded-md text-sm font-medium transition-all text-stone-500 hover:text-stone-900";
-                
-                funnelChartInstance.data.datasets[0].label = 'Кількість Одиниць (Рітейл-ТЦ)';
-                funnelChartInstance.data.datasets[0].data = [marketData.tam.units, marketData.sam.units, marketData.sam.units * marketData.somTarget];
-
-                // Повертаємо авто-масштабування для одиниць
-                funnelChartInstance.options.scales.x.max = undefined;
-                funnelChartInstance.options.scales.x.title.text = 'Кількість Одиниць (Рітейл-ТЦ)';
-                funnelChartInstance.options.scales.x.ticks.callback = function(value) { return formatNumber(value, false); };
-            }
-            
-            funnelChartInstance.update();
-        }
-
+        
         // --- Chart 2: Simulator Chart ---
         let simulationChartInstance = null;
         
         function initSimulationChart() {
             const ctx = document.getElementById('simulationChart').getContext('2d');
             
-            const baseRevenue = (marketData.sam.money * marketData.somTarget) / 1000000;
+            // Base is Year 1 SOM
+            const baseRevenue = marketData.somMoney[currentYearIndex].toFixed(2);
 
             const config = {
                 type: 'bar',
                 data: {
-                    labels: ['Базова Ціль (20%)', 'Симуляція'],
+                    labels: ['Базова Ціль', 'Симуляція'],
                     datasets: [{
                         label: 'Дохід (млн грн)',
                         data: [baseRevenue, baseRevenue], 
@@ -431,29 +382,86 @@
         const shareDisplay = document.getElementById('shareValueDisplay');
         const revenueDisplay = document.getElementById('projectedRevenue');
         const customersDisplay = document.getElementById('projectedCustomers');
+        const baseTargetDisplay = document.getElementById('base-target-display');
+        const yearDisplays = [
+            document.getElementById('simulator-year-display'),
+            document.getElementById('projected-year-display'),
+            document.getElementById('chart-year-display')
+        ];
 
-        // *************** ВІДОКРЕМЛЕННЯ ФУНКЦІЇ ДЛЯ ІНІЦІАЛІЗАЦІЇ СИМУЛЯТОРА ***************
-        function initializeSimulatorDisplay() {
-            // Програмно викликаємо подію input, щоб встановити початкові значення (20%)
-            if (slider) {
-                slider.dispatchEvent(new Event('input'));
-            }
-        }
-        // ******************************************************************************
-
-        slider.addEventListener('input', function(e) {
-            // Запобіжник: перевіряємо, чи існує інстанція графіка перед оновленням
+        // Recalculates all simulator values based on the current year
+        function updateSimulatorDisplay() {
             if (!simulationChartInstance) return;
 
-            const percent = parseInt(e.target.value);
+            const yearLabel = marketData.years[currentYearIndex];
+            const samMoney = marketData.samMoney[currentYearIndex] * 1000000;
+            const somPercent = (marketData.somPercent[currentYearIndex] * 100).toFixed(1);
+            const baseRevenueMillions = marketData.somMoney[currentYearIndex].toFixed(2);
+            
+            // Calculate ARPU for the selected year
+            const arpu = samMoney / marketData.baseSamUnits;
+
+            // 1. Update text fields with current year context
+            yearDisplays.forEach(el => el.innerText = yearLabel);
+            // ВИПРАВЛЕНО: Видалено ** навколо відсотка
+            document.getElementById('base-som-percent-text').innerText = somPercent + '%';
+            
+            // 2. Update slider properties
+            slider.value = somPercent; // Set slider to base target
+            baseTargetDisplay.innerText = `${somPercent}% (Базова ціль)`;
+            
+            // 3. Update chart base
+            simulationChartInstance.data.datasets[0].data[0] = parseFloat(baseRevenueMillions);
+            simulationChartInstance.data.labels[0] = `Базова Ціль (${somPercent}%)`;
+            
+            // 4. Trigger slider update to match initial state
+            // The logic inside the slider's event listener now runs to calculate and update
+            // the second bar ("Симуляція") and the output metrics
+            const shareDecimal = parseFloat(slider.value) / 100;
+            const newUnits = marketData.baseSamUnits * shareDecimal;
+            const newRevenue = newUnits * arpu;
+            const newRevenueMillions = (newRevenue / 1000000).toFixed(2); 
+
+            // Update output fields
+            revenueDisplay.innerText = newRevenueMillions;
+            customersDisplay.innerText = new Intl.NumberFormat('uk-UA').format(Math.round(newUnits));
+
+            // Update simulation bar
+            simulationChartInstance.data.datasets[0].data[1] = parseFloat(newRevenueMillions);
+            simulationChartInstance.update();
+        }
+
+        // Function called by year buttons
+        function updateSimulatorYear(yearIndex) {
+            currentYearIndex = yearIndex;
+            
+            // Update button styles
+            for (let i = 0; i < marketData.years.length; i++) {
+                const btn = document.getElementById(`btn-year-${i}`);
+                if (i === yearIndex) {
+                    btn.className = "year-btn year-btn-active";
+                } else {
+                    btn.className = "year-btn year-btn-inactive";
+                }
+            }
+            
+            updateSimulatorDisplay();
+        }
+
+        // Logic runs on slider input
+        slider.addEventListener('input', function(e) {
+            if (!simulationChartInstance) return;
+
+            const percent = parseFloat(e.target.value); 
             shareDisplay.innerText = percent + '%';
             
             const shareDecimal = percent / 100;
-            // New Units = SAM Units * Share
-            const newUnits = marketData.sam.units * shareDecimal;
-            // New Revenue = New Units * ARPU
-            const newRevenue = newUnits * marketData.arpu;
-            const newRevenueMillions = (newRevenue / 1000000).toFixed(1);
+            const samMoneyCurrentYear = marketData.samMoney[currentYearIndex] * 1000000;
+            const arpu = samMoneyCurrentYear / marketData.baseSamUnits;
+
+            const newUnits = marketData.baseSamUnits * shareDecimal;
+            const newRevenue = newUnits * arpu;
+            const newRevenueMillions = (newRevenue / 1000000).toFixed(2); 
 
             // Update Text
             revenueDisplay.innerText = newRevenueMillions;
@@ -464,94 +472,16 @@
             simulationChartInstance.update();
         });
         
-        // --- Chart 3: Growth Chart ---
-        function initGrowthChart() {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            
-            // Generate 5 years of data based on SAM (51 млн грн)
-            const years = ['2025 (База)', '2026', '2027', '2028', '2029'];
-            let currentSAM = marketData.sam.money / 1000000; // In Millions
-            const growthSAMData = [];
-            
-            for(let i=0; i<5; i++) {
-                growthSAMData.push(currentSAM.toFixed(1));
-                currentSAM = currentSAM * (1 + marketData.growthRate);
-            }
-
-            // Calculate SOM data (20% of SAM)
-            const growthSOMData = growthSAMData.map(sam => (parseFloat(sam) * marketData.somTarget).toFixed(1));
-
-            const config = {
-                type: 'line',
-                data: {
-                    labels: years,
-                    datasets: [
-                        {
-                            label: 'SAM (Доступний Ринок)',
-                            data: growthSAMData,
-                            borderColor: 'rgba(13, 148, 136, 1)', // Teal 600
-                            backgroundColor: 'rgba(20, 184, 166, 0.1)', // Teal fill
-                            pointBackgroundColor: 'white',
-                            pointBorderColor: 'rgba(13, 148, 136, 1)',
-                            pointBorderWidth: 2,
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            fill: true,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'SOM (Цільовий Дохід, 20%)',
-                            data: growthSOMData,
-                            borderColor: 'rgba(59, 130, 246, 1)', // Blue 500
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)', // Blue fill
-                            pointBackgroundColor: 'white',
-                            pointBorderColor: 'rgba(59, 130, 246, 1)',
-                            pointBorderWidth: 2,
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            fill: false, // Don't fill SOM area
-                            tension: 0.4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: true, position: 'bottom' }, // Show legend
-                        tooltip: {
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            padding: 10,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.raw + ' млн грн';
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: { display: true, text: 'Обсяг ринку (млн грн)' },
-                            grid: { color: '#f5f5f4' }
-                        },
-                        x: {
-                            grid: { display: false }
-                        }
-                    }
-                }
-            };
-            new Chart(ctx, config);
-        }
-
+        // --- REMOVED CHART 3 LOGIC ---
+        
         // Initialize all
         document.addEventListener('DOMContentLoaded', () => {
-            initFunnelChart();
-            initSimulationChart(); // Графік симулятора створюється тут
-            initGrowthChart();
+            initGrowthChart(); 
+            initSimulationChart(); 
+            // Removed: initMgrChart();
 
-            // Встановлюємо початкові значення симулятора ПІСЛЯ того, як initSimulationChart завершився
-            initializeSimulatorDisplay();
+            // Initializes simulator display for Year 1 (index 0)
+            updateSimulatorYear(0); 
         });
 
     </script>
